@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     header: {
       textAlign: 'center',
-      background: '#212121',
+      background: '#f5deb3',
       color: '#fff'
     },
     card: {
