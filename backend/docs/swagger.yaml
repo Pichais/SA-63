@@ -1,0 +1,706 @@
+basePath: /api/v1
+definitions:
+  controllers.Spaciality:
+    properties:
+      organdata:
+        type: integer
+      physiciandata:
+        type: integer
+      typediseasedata:
+        type: integer
+    type: object
+  ent.Organ:
+    properties:
+      OrganName:
+        description: OrganName holds the value of the "OrganName" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.OrganEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the OrganQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.OrganEdges:
+    properties:
+      forogan:
+        description: Forogan holds the value of the forogan edge.
+        items:
+          $ref: '#/definitions/ent.Spaciality'
+        type: array
+    type: object
+  ent.Physician:
+    properties:
+      PhysicianEmail:
+        description: PhysicianEmail holds the value of the "PhysicianEmail" field.
+        type: string
+      PhysicianName:
+        description: PhysicianName holds the value of the "PhysicianName" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.PhysicianEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the PhysicianQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.PhysicianEdges:
+    properties:
+      foruser:
+        description: Foruser holds the value of the foruser edge.
+        items:
+          $ref: '#/definitions/ent.Spaciality'
+        type: array
+    type: object
+  ent.Spaciality:
+    properties:
+      edges:
+        $ref: '#/definitions/ent.SpacialityEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the SpacialityQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.SpacialityEdges:
+    properties:
+      ogan:
+        $ref: '#/definitions/ent.Organ'
+        description: Ogan holds the value of the ogan edge.
+        type: object
+      type:
+        $ref: '#/definitions/ent.TypeDisease'
+        description: Type holds the value of the type edge.
+        type: object
+      user:
+        $ref: '#/definitions/ent.Physician'
+        description: User holds the value of the user edge.
+        type: object
+    type: object
+  ent.TypeDisease:
+    properties:
+      DiseaseName:
+        description: DiseaseName holds the value of the "DiseaseName" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.TypeDiseaseEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the TypeDiseaseQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.TypeDiseaseEdges:
+    properties:
+      fortype:
+        description: Fortype holds the value of the fortype edge.
+        items:
+          $ref: '#/definitions/ent.Spaciality'
+        type: array
+    type: object
+  gin.H:
+    additionalProperties: true
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server for SUT SE 2563
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: SUT SA Example API
+  version: "1.0"
+paths:
+  /organs:
+    get:
+      description: list organ entities
+      operationId: list-organ
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Organ'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List organ entities
+    post:
+      consumes:
+      - application/json
+      description: Create organ
+      operationId: create-organ
+      parameters:
+      - description: Organ entity
+        in: body
+        name: organ
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Organ'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Organ'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create organ
+  /organs/{id}:
+    delete:
+      description: get organ by ID
+      operationId: delete-organ
+      parameters:
+      - description: Organ ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a organ entity by ID
+    get:
+      description: get organ by ID
+      operationId: get-organ
+      parameters:
+      - description: Organ ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Organ'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a organ entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update organ by ID
+      operationId: update-organ
+      parameters:
+      - description: Organ ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Organ entity
+        in: body
+        name: organ
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Organ'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Organ'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a organ entity by ID
+  /physicians:
+    get:
+      description: list physician entities
+      operationId: list-physician
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Physician'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List physician entities
+    post:
+      consumes:
+      - application/json
+      description: Create physician
+      operationId: create-physician
+      parameters:
+      - description: Physician entity
+        in: body
+        name: physician
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Physician'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Physician'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create physician
+  /physicians/{id}:
+    delete:
+      description: get physician by ID
+      operationId: delete-physician
+      parameters:
+      - description: Physician ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a physician entity by ID
+    get:
+      description: get physician by ID
+      operationId: get-physician
+      parameters:
+      - description: Physician ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Physician'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a physician entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update physician by ID
+      operationId: update-physician
+      parameters:
+      - description: Physician ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Physician entity
+        in: body
+        name: physician
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Physician'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Physician'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a physician entity by ID
+  /spacialitys:
+    get:
+      description: list spaciality entities
+      operationId: list-spaciality
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Spaciality'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List spaciality entities
+    post:
+      consumes:
+      - application/json
+      description: Create spaciality
+      operationId: create-spaciality
+      parameters:
+      - description: Spaciality entity
+        in: body
+        name: spaciality
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.Spaciality'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.Spaciality'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create spaciality
+  /spacialitys/{id}:
+    delete:
+      description: get spaciality by ID
+      operationId: delete-spaciality
+      parameters:
+      - description: Spaciality ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a spaciality entity by ID
+  /typediseases:
+    get:
+      description: list typedisease entities
+      operationId: list-typedisease
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.TypeDisease'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List typedisease entities
+    post:
+      consumes:
+      - application/json
+      description: Create typedisease
+      operationId: create-typedisease
+      parameters:
+      - description: TypeDisease entity
+        in: body
+        name: typedisease
+        required: true
+        schema:
+          $ref: '#/definitions/ent.TypeDisease'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.TypeDisease'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create typedisease
+  /typediseases/{id}:
+    delete:
+      description: get typedisease by ID
+      operationId: delete-typedisease
+      parameters:
+      - description: TypeDisease ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a typedisease entity by ID
+    get:
+      description: get typedisease by ID
+      operationId: get-typedisease
+      parameters:
+      - description: TypeDisease ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.TypeDisease'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a typedisease entity by ID
+    put:
+      consumes:
+      - application/json
+      description: update typedisease by ID
+      operationId: update-typedisease
+      parameters:
+      - description: TypeDisease ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: TypeDisease entity
+        in: body
+        name: typedisease
+        required: true
+        schema:
+          $ref: '#/definitions/ent.TypeDisease'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.TypeDisease'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update a typedisease entity by ID
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+  BasicAuth:
+    type: basic
+  OAuth2AccessCode:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: accessCode
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Application:
+    flow: application
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Implicit:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: implicit
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    type: oauth2
+  OAuth2Password:
+    flow: password
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      read: ' Grants read access'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+swagger: "2.0"
