@@ -11,11 +11,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 
+import { Alert } from '@material-ui/lab';
 import { DefaultApi } from '../../api/apis';
 import { EntOrgan } from '../../api/models/EntOrgan';
 import { EntTypeDisease } from '../../api/models/EntTypeDisease';
 import { Select } from '@material-ui/core';
 import { EntPhysician } from '../../api/models/EntPhysician';
+import { ContentHeader } from '@backstage/core';
 
 
 
@@ -157,11 +159,26 @@ export default function MenuAppBar() {
               >
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
-              <p>Sittisak kombai</p>
             </div>
           )}
         </Toolbar>
       </AppBar>
+
+      <ContentHeader title="">
+        {status ? (
+          <div>
+            {alert ? (
+              <Alert severity="success">
+                บันทึกข้อมูลสำเร็จ!
+              </Alert>
+            ) : (
+                <Alert severity="warning" style={{ marginTop: 20 }}>
+                  บันทึกข้อมูลล้มเหลว!
+                </Alert>
+              )}
+          </div>
+        ) : null}
+      </ContentHeader>
 
       <AppBar position="static" color='inherit' background-color="inherit">
         <Grid container alignItems="center" spacing={2} >
@@ -191,7 +208,7 @@ export default function MenuAppBar() {
           <Grid item xs={2}><p></p></Grid>
           <Grid item xs={2}><h3>E-mail</h3></Grid>
           <Grid item xs={2}>
-          <Select
+            <Select
               labelId="user_id-label"
               label="User"
               id="user_id"
@@ -277,8 +294,6 @@ export default function MenuAppBar() {
 
               color="inherit"
               style={{ width: 200 }}
-              component={RouterLink}
-              to="/login"
               variant="contained">
 
               SAVE
@@ -289,7 +304,7 @@ export default function MenuAppBar() {
             <Button
               style={{ marginLeft: 20 }}
               component={RouterLink}
-              to="/"
+              to="/login"
               variant="contained"
             >
               Back
