@@ -117,8 +117,11 @@ func main() {
 	typeDiseases := TypeDiseases{
 		TypeDisease: []TypeDisease{
 			TypeDisease{"Cataract (ต้อกระจก)"},
-            TypeDisease{"Heart arrhythmia (หัวใจเต้นผิดจังหวะ)"},
-            TypeDisease{"Abnormal joints (ข้อต่อผิดปกติ)"},
+			TypeDisease{"Glaucoma (ต้อหิน)"},
+			TypeDisease{"Heart arrhythmia (หัวใจเต้นผิดจังหวะ)"},
+			TypeDisease{"Vulvular Heart Disease (โรคลิ้นหัวใจ)"},
+			TypeDisease{"Abnormal joints (ข้อต่อผิดปกติ)"},
+			TypeDisease{"หมอนรองกระดูกสันหลัง กดทับเส้นประสาท"},
 		},
 	}
 
